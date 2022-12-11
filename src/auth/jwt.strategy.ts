@@ -11,8 +11,6 @@ export type JwtAuthenticatedRequest = Request & {
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(configService: ConfigService, private userService: UsersService) {
-    console.log("whack");
-
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -24,10 +22,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     sub: string;
     email: string;
   }): Promise<UserOmitPasswordHash | undefined> {
-    console.log(payload);
-
-    console.log(payload.sub);
-
     return await this.userService.findOne(payload.sub);
   }
 }

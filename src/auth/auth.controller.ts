@@ -1,4 +1,11 @@
-import { Body, Controller, Post, Request, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from "@nestjs/common";
 import { UserOmitPasswordHash } from "src/users/entities/user.schema";
 import { LocalAuthGuard } from "./auth-local.guard";
 import { AuthService } from "./auth.service";
@@ -26,5 +33,13 @@ export class AuthController {
   @Post("check-email")
   checkEmail(@Body() emailDto: CheckEmailDto): Promise<boolean> {
     return this.authService.validateEmail(emailDto.email);
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Get("verify")
+  async verify(
+    @Request() req: AuthenticatedRequest
+  ): Promise<UserOmitPasswordHash> {
+    return req.user;
   }
 }

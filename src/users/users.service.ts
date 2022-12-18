@@ -39,7 +39,7 @@ export class UsersService {
           name: "DD-MM-YYYY",
           value: "en-UK",
         },
-        separator: "",
+        separator: "-",
         weekdayFormat: {
           name: "Not included",
           value: "none",

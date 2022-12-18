@@ -10,6 +10,7 @@ import { UserOmitPasswordHash } from "src/users/entities/user.schema";
 import { LocalAuthGuard } from "./auth-local.guard";
 import { AuthService } from "./auth.service";
 import { CheckEmailDto } from "./dto/check-email.dto";
+import { JwtAuthGuard } from "./jwt-auth.guard";
 import { AuthenticatedRequest } from "./local.strategy";
 
 export interface LoginResponse {
@@ -35,7 +36,7 @@ export class AuthController {
     return this.authService.validateEmail(emailDto.email);
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("verify")
   async verify(
     @Request() req: AuthenticatedRequest

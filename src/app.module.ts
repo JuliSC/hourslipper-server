@@ -6,6 +6,8 @@ import { AppService } from "./app.service";
 import { UsersModule } from "./users/users.module";
 import { AuthModule } from "./auth/auth.module";
 import { TogglModule } from "./external-interfaces/toggl/toggl.module";
+import { join } from "path";
+import { ServeStaticModule } from "@nestjs/serve-static";
 
 @Module({
   imports: [
@@ -13,6 +15,9 @@ import { TogglModule } from "./external-interfaces/toggl/toggl.module";
     MongooseModule.forRoot(
       `${process.env.DB_URL}:${process.env.DB_PORT}/${process.env.DB_NAME}`
     ),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, "..", "public"),
+    }),
     UsersModule,
     AuthModule,
     TogglModule,

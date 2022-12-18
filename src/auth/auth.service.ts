@@ -24,6 +24,7 @@ export class AuthService {
     pass: string
   ): Promise<UserOmitPasswordHash | null> {
     const user = await this.usersService.findOneWithPasswordHash(email);
+
     if (user && (await compare(pass, user.passwordHash))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { passwordHash, ...result } = user;

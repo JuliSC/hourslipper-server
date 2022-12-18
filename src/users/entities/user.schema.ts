@@ -1,8 +1,9 @@
 import { Prop, raw, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, LeanDocument } from "mongoose";
 
 export type UserDocument = HydratedDocument<User>;
 export type UserOmitPasswordHash = Omit<User, "passwordHash">;
+export type LeanUserDocument = LeanDocument<User>;
 
 @Schema()
 export class User {
@@ -26,10 +27,10 @@ export class User {
       hoursAppend: String,
       dateHeader: String,
       hoursHeader: String,
-      dateFormat: String,
+      dateFormat: Object,
       separator: String,
-      weekdayFormat: String,
-      language: String,
+      weekdayFormat: Object,
+      language: Object,
     })
   )
   settings!: {
@@ -38,10 +39,19 @@ export class User {
       hoursAppend: "";
       dateHeader: "";
       hoursHeader: "";
-      dateFormat: "";
+      dateFormat: {
+        name: "DD-MM-YYYY";
+        value: "en-UK";
+      };
       separator: "";
-      weekdayFormat: "";
-      language: "";
+      weekdayFormat: {
+        name: "Not included";
+        value: "none";
+      };
+      language: {
+        name: "English";
+        value: "en-US";
+      };
     };
   };
 }

@@ -12,9 +12,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(
-      `${process.env.DB_URL}:${process.env.DB_PORT}/${process.env.DB_NAME}`
-    ),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "public"),
     }),

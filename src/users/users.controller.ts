@@ -68,18 +68,24 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(":id")
   async findOne(@Param("id") id: string) {
     return this.usersService.findOne(id);
   }
 
-  @Patch(":id")
-  async update(@Param("id") id: string, @Body() updateUserDTO: UpdateUserDTO) {
-    return this.usersService.update(id, updateUserDTO);
+  @UseGuards(JwtAuthGuard)
+  @Patch()
+  async update(
+    @Headers("Authorization") auth: string,
+    @Body() updateUserDTO: UpdateUserDTO
+  ) {
+    return this.usersService.update(auth.split(" ")[1], updateUserDTO);
   }
 
-  @Delete(":id")
-  async remove(@Param("id") id: string) {
-    return this.usersService.remove(id);
+  @UseGuards(JwtAuthGuard)
+  @Delete()
+  async remove(@Headers("Authorization") auth: string) {
+    return this.usersService.remove(auth.split(" ")[1]);
   }
 }

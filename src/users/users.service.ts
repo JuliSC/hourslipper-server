@@ -64,7 +64,9 @@ export class UsersService {
     return this.userModel.findById(id);
   }
 
-  async update(id: string, updateUserDTO: UpdateUserDTO) {
+  async update(token: string, updateUserDTO: UpdateUserDTO) {
+    const decodedToken = this.jwtService.decode(token) as JwtToken;
+    const id = decodedToken.sub;
     return this.userModel.findByIdAndUpdate(id, updateUserDTO);
   }
 
@@ -74,7 +76,9 @@ export class UsersService {
     return this.userModel.findByIdAndUpdate(id, { settings });
   }
 
-  async remove(id: string) {
+  async remove(token: string) {
+    const decodedToken = this.jwtService.decode(token) as JwtToken;
+    const id = decodedToken.sub;
     return this.userModel.findByIdAndDelete(id);
   }
 

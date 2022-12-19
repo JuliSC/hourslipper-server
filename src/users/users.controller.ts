@@ -18,7 +18,9 @@ import { AdminGuard } from "src/auth/admin.guard";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { UpdateSettingsDTO } from "./dto/update.settings.dto";
 import { Header } from "@nestjs/common/decorators/http/header.decorator";
+import { ApiTags } from "@nestjs/swagger/dist";
 
+@ApiTags("users")
 @Controller("users")
 export class UsersController {
   constructor(

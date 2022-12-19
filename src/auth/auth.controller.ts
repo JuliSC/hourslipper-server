@@ -6,6 +6,7 @@ import {
   Request,
   UseGuards,
 } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { UserOmitPasswordHash } from "src/users/entities/user.schema";
 import { LocalAuthGuard } from "./auth-local.guard";
 import { AuthService } from "./auth.service";
@@ -18,6 +19,7 @@ export interface LoginResponse {
   user: UserOmitPasswordHash;
 }
 
+@ApiTags("auth")
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

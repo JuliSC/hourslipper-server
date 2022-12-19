@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
 
 async function bootstrap() {
@@ -11,6 +12,14 @@ async function bootstrap() {
       "35.157.117.28",
     ],
   });
+
+  const config = new DocumentBuilder()
+    .setTitle("Hourslipper API")
+    .setDescription("This is the API for Hourslipper")
+    .setVersion("1.0")
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api/docs", app, document);
 
   app.setGlobalPrefix("api");
   await app.listen(process.env.PORT || 3000);

@@ -7,14 +7,18 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.use(helmet());
-  app.enableCors({
-    origin: [
-      "http://localhost:8080",
-      "3.75.158.163",
-      "3.125.183.140",
-      "35.157.117.28",
-    ],
-  });
+  if (process.env.NODE_ENV === "production") {
+    app.enableCors({
+      origin: [
+        "http://localhost:8080",
+        "3.75.158.163",
+        "3.125.183.140",
+        "35.157.117.28",
+      ],
+    });
+  } else {
+    app.enableCors();
+  }
 
   const config = new DocumentBuilder()
     .setTitle("Hourslipper API")
